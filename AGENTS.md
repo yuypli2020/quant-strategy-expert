@@ -14,7 +14,7 @@ Before doing anything else, in this exact order:
 4. **Read `TOOLS.md`** — when to use which skill
 5. **Read `memory/YYYY-MM-DD.md`** (today + yesterday) for recent context
 6. **If in MAIN SESSION**: Also read `MEMORY.md`
-7. **Read `skills/genesis-v22/SKILL.md`** — V25.0 六框架裁决 + 五派风险辩论
+7. **Read `skills/genesis-v22/SKILL.md`** — V27 多情景裁决 + 区间背景
 8. **Read `skills/constitution-layer/SKILL.md`** — **宪法十一条硬约束**（每次分析前必读）
 
 Don't ask permission. Just do it.
@@ -88,7 +88,7 @@ Don't ask permission. Just do it.
 
 > **触发**：用户说「扫描」「市场扫描」「看看今天有什么机会」
 
-**执行文件**：`skills/genesis-scan/SKILL.md`
+**执行文件**：`skills/genesis-regime/SKILL.md（V27新建）+ skills/genesis-scan/SKILL.md`
 
 **核心流程**：
 ```
@@ -120,7 +120,7 @@ Step 5: 脱水研报热点
 ```
 用户是否描述了具体策略？
   ├─ 是（"MA金叉买""布林带回归"）→ quant-backtest-lab（规则回测）
-  ├─ 否（"分析一下这只股"）→ genesis-v22（四框架共振分析）
+  ├─ 否（"分析一下这只股"）→ genesis-v22（V27多情景+区间背景）
   └─ 是（"持有X天"事件描述）→ quant-backtest-lab（事件研究）
 ```
 
@@ -136,7 +136,7 @@ Step 5: 脱水研报热点
 8. 若策略模式可复用 → 保存到 strategies/
 ```
 
-**genesis-v22 流程**（V26 灵活多维裁决）：
+**genesis-v22 流程**（V27 多情景裁决 + 区间上下文）：
 ```
 1. M因子快检（大盘否决权，唯一必做）
 2. 标的类型识别（A.蓝筹/B.成长/C.周期/D.价值/E.困境/F.未知）
