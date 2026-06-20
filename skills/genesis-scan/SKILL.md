@@ -1,7 +1,9 @@
 # genesis-scan — P0 前哨扫描入口
 
+> **版本**：V24.1 对齐版
 > **触发**：用户说「扫描」「市场扫描」「看看今天有什么机会」「看看市场」
 > **Skill 可用性**：`westock-data`（必须）| `westock-tool`（必须）| `online-search`（降级用）
+> **对齐**：与 `skills/genesis-v22/` (V24.1) 无缝衔接，P0 扫描结果自动作为 P1 的情报输入
 
 ---
 

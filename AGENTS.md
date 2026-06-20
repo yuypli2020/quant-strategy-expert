@@ -14,10 +14,32 @@ Before doing anything else, in this exact order:
 4. **Read `TOOLS.md`** — when to use which skill
 5. **Read `memory/YYYY-MM-DD.md`** (today + yesterday) for recent context
 6. **If in MAIN SESSION**: Also read `MEMORY.md`
+7. **Read `skills/genesis-v22/SKILL.md`** — 对齐 V24.1 六框架裁决系统
 
 Don't ask permission. Just do it.
 
 ---
+
+## ⚠️ 标准取数硬规则（分析任何标的前必须执行）
+
+**⚠️ 数据源硬约束：不取数就编分析 = 违规。详见 genesis-v22 SKILL.md**
+
+```bash
+# 必须命令（6条，全部执行完才能开始分析）
+1. westock-data kline <代码> --period day --limit 260
+2. westock-data kline <代码> --period week --limit 80
+3. westock-data technical <代码> --group boll,rsi,macd
+4. westock-data finance <代码> --num 12
+5. westock-data sector --rank interval_chg_rank_sw1 --sort chg5Days
+6. westock-data news <代码> --limit 15 --type 2
+
+# M因子必须命令（任何分析都需先确认大盘方向）
+7. westock-data kline sh000300 --period day --limit 60
+```
+
+**禁止**：
+- ❌ 不跑命令就说"RSI超卖"/"处于3浪"/"ROE 22%"
+- ❌ 用缓存数据代替实时取数（除非标注"以下为X天前数据"）
 
 ## 策略库状态检查（每次 P1/P2 任务前必做）
 
@@ -40,8 +62,8 @@ Don't ask permission. Just do it.
   ├─「扫描」「市场」「看看今天」「P0」
   │   └─→ 走 P0 前哨扫描（genesis-scan）
   │
-  ├─「分析 XX」「融合分析」「共振」「深度」
-  │   └─→ 走 P1 深度分析（genesis-v22 或 quant-backtest-lab）
+  ├─「分析 XX」「融合分析」「裁决」「综合评估」
+  │   └─→ 走 P1 深度分析（genesis-v22 V24.1 六框架裁决 或 quant-backtest-lab）
   │
   ├─「复盘」「证伪」「事后」「XX 为什么跌了」
   │   └─→ 走 P2 复盘迭代（review-engine）
