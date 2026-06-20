@@ -68,17 +68,19 @@ Step 5: 区间相位有无变化
 > 每次分析只加载**相关**流派，不全加载。
 
 ```
-标的类型 → 优先加载的流派：
+标的类型 → 优先加载的流派（按相关性排序）：
 ────────────────────────────────────────
-A.蓝筹大盘 → 基本面(fundamental) > 宏观(sector-rotation) > 趋势(trend-following)
-B.成长题材 → 趋势(trend-following) > 动量(momentum-flow) > 事件(event-sentiment)
-C.周期股   → 周期(elliott-wave) > 宏观(sector-rotation) > 基本面(fundamental)
-D.价值低估 → 基本面(fundamental) > 回归(mean-reversion) > 资金(momentum-flow)
-E.困境反转 → 事件(event-sentiment) > 情绪(news-signal) > 基本面(fundamental)
-F.未知     → 全部流派快速扫一遍（但权重轻）
+A.蓝筹大盘 → 基本面(fundamental) > 板块轮动(sector-rotation) > 趋势(trend-following) > 周期(cycle-analysis)
+B.成长题材 → 趋势(trend-following) > 动量(momentum-flow) > 事件情报(event-intelligence) > 周期(cycle-analysis)
+C.周期股   → 周期(cycle-analysis) > 板块轮动(sector-rotation) > 基本面(fundamental) > 均值回归(mean-reversion)
+D.价值低估 → 基本面(fundamental) > 均值回归(mean-reversion) > 动量(momentum-flow) > 事件情报(event-intelligence)
+E.困境反转 → 事件情报(event-intelligence) > 周期(cycle-analysis) > 基本面(fundamental)
+F.未知     → 趋势/动量/事件情报/周期 各快速过一遍
 ────────────────────────────────────────
-所有标的 → 缠论(chan-theory) 默认加载（宪法级，权重最低20%）
 所有标的 → 量化严谨派(quantitative-research) 必须加载（否决权）
+周期分析 → cycle-analysis（内部已含原缠论+波浪逻辑，不再单独加载）
+事件情报 → event-intelligence（内部已含原event-sentiment+news-signal逻辑）
+无固定权重 → 各流派按标的类型权重动态分配，综合分由 orchestrator 计算
 ```
 
 ---

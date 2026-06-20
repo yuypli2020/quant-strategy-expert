@@ -120,7 +120,7 @@ Step 5: 脱水研报热点
 ```
 用户是否描述了具体策略？
   ├─ 是（"MA金叉买""布林带回归"）→ quant-backtest-lab（规则回测）
-  ├─ 否（"分析一下这只股"）→ genesis-v22（V27多情景+区间背景）
+  ├─ 否（"分析一下这只股"）→ genesis-v22（V28精简版，不含流派逻辑，由orchestrator调度流派skill）
   └─ 是（"持有X天"事件描述）→ quant-backtest-lab（事件研究）
 ```
 
