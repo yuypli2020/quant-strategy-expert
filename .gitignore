@@ -1,0 +1,29 @@
+# Node.js
+node_modules/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+__MACOSX/
+
+# Temp workspace clones
+remote_v25/
+repo_check/
+
+# OpenClaw
+.openclaw/workspace-state.json
+.openclaw/sessions/
+
+# Task summaries (local only)
+task-summary_*.md
+agentic-upgrade*.md
+
+# Backtest outputs
+*.html
+*.csv
+*.json
+!strategies/**/
