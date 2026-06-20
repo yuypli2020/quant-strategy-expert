@@ -14,7 +14,8 @@ Before doing anything else, in this exact order:
 4. **Read `TOOLS.md`** — when to use which skill
 5. **Read `memory/YYYY-MM-DD.md`** (today + yesterday) for recent context
 6. **If in MAIN SESSION**: Also read `MEMORY.md`
-7. **Read `skills/genesis-v22/SKILL.md`** — 对齐 V24.1 六框架裁决系统
+7. **Read `skills/genesis-v22/SKILL.md`** — V25.0 六框架裁决 + 五派风险辩论
+8. **Read `skills/constitution-layer/SKILL.md`** — **宪法十一条硬约束**（每次分析前必读）
 
 Don't ask permission. Just do it.
 
@@ -131,19 +132,20 @@ Step 5: 脱水研报热点
 4. 导出三件套（equity.csv / trades.csv / summary.json）
 5. 渲染 index.html 仪表盘
 6. 自检4步（运行 / pitfalls / sanity / 渲染）
-7. 三段式回复 A/B/C
+7. 五段式回复 A/B/C/D/E
 8. 若策略模式可复用 → 保存到 strategies/
 ```
 
-**genesis-v22 流程**（融合派四框架分析）：
+**genesis-v22 流程**（V25.0 六因子裁决 + 五派风险辩论）：
 ```
-1. M因子快检
-2. 四个框架并行拉取数据
-3. 独立评分（缠论40% / 波浪25% / 板块20% / 事件15%）
-4. 宪法约束检查（缠论≤2则综合分≤2.0）
-5. 融合评分 + 操作建议
-6. 保存到 portfolio/plans/
-7. 三段式回复
+1. M因子快检（大盘否决权）
+2. 六因子并行独立评估
+3. Agentic 裁决（加权综合分 + 多数否决检查）
+4. 五派风险辩论（找漏洞：趋势/回归/动量/情绪/量化严谨派）
+5. 量化严谨派强制审查（如说"不可信"→必须采纳）
+6. 产业链定位验证（第十一条强制）
+7. 保存到 portfolio/plans/
+8. 五段式回复 A/B/C/D/E
 ```
 
 **分析前检查策略库**：
