@@ -2,7 +2,47 @@
 
 > **前置规则**：调用任何 skill 前，先确认它出现在当前 session 的 `<available_skills>` 列表中。不在列表 = 已关闭，按下方「降级方案」处理。本文件提到的所有 CLI 命令和调用流程，仅在对应 skill 可用时生效。
 
-## 产业链情报采集（V25.0 新增核心模块）
+## 产业链情报采集 + 新闻催化链（V26 增强）
+
+> **角色**：P0 前哨扫描的前置情报层 + P1 深度分析前的产业链定位验证
+> **触发**：用户说「扫描」「产业链」「XX短缺/涨价」「板块分析」
+
+### 采集清单与数据源（V26 增强）
+
+| 情报类型 | 数据源 | 命令示例 |
+|----------|--------|---------|
+| 材料短缺/涨价 | web_search + westock-data marketnews | `web_search "硅料短缺 涨价 2026"` |
+| 供应链中断 | web_search + neodata | `web_search "半导体 供应链中断 制裁"` |
+| 产能投放/缩减 | westock-data news + neodata | `westock-data news <标的> --limit 10` |
+| 政策/贸易事件 | web_search | `web_search "半导体 出口管制 关税"` |
+| 新闻催化链 | tencent-news + web_search | `搜索国内A股催化 + 美股映射` 🆕 |
+| 板块情绪 | westock-data hot + sector | `westock-data hot` / `westock-data sector` 🆕 |
+
+### 新闻催化链分析（V26 新增）
+
+每条催化必须写出完整因果链：
+```
+新闻事件 → 受益逻辑推导 → 板块方向（含二级细分） → 候选方向
+
+数据源：
+- tencent-news Skill：7×24国内新闻 + 板块热点
+- web search：美股催化（"TACO" "NVDA" "美联储"）+ 全球宏观（"中东" "贸易"）
+```
+
+### 二级板块细分查询（V26 新增）
+
+分析板块时必须标注二级细分板块：
+
+| 一级板块 | 二级细分 | 代表标的查询 |
+|---------|---------|------------|
+| 电子 | 存储芯片 | `westock-data board --name 存储芯片` |
+| 电子 | PCB | `westock-data board --name PCB` |
+| 电子 | 封测 | `westock-data board --name 封测` |
+| 电子 | 光通信/CPO | `westock-data board --name CPO` |
+| 电子 | 消费电子/射频 | `westock-data board --name 消费电子` |
+| 电子 | 半导体设备 | `westock-data board --name 半导体设备` |
+
+完整映射表：`skills/genesis-scan/sector_taxonomy.md`
 
 > **角色**：P0 前哨扫描的前置情报层 + P1 深度分析前的产业链定位验证
 > **触发**：用户说「扫描」「产业链」「XX短缺/涨价」「板块分析」
@@ -44,6 +84,48 @@ westock-data profile sh688396
 ```
 
 **典型教训**：华润微(688396)主营"功率半导体设计+晶圆制造"，是**中游使用者**，不是硅片生产商。被归入"大硅片"板块是概念沾边，不验证就推荐 = 违规。
+
+---
+
+## 🔴 CL-W 周线缠论数据获取（V26 新增）
+
+> **强制规则**：缠论分析**必须使用周线K线**作为主分析级别，日线仅做确认辅助，月线做级别协同。不可仅用日线数据做缠论分析。
+
+```bash
+# 三条必须全部执行：
+westock-data kline <代码> --period week --limit 80     ← 周线（主分析级别）
+westock-data kline <代码> --period day --limit 260      ← 日线（确认辅助）
+westock-data kline <代码> --period month --limit 24     ← 月线（级别协同）
+```
+
+**CL-W 分析流程**：
+1. 周线分型判定（顶分型/底分型确认）
+2. 周线笔方向判断（向上笔/向下笔）
+3. 周线中枢位置计算（重叠区间）
+4. 日线确认（周线信号+日线同向=强度更高）
+5. 月线协同（月线支撑/压力位验证）
+
+## DRGN/EMO 情绪数据源（V26 新增）
+
+```bash
+# 游资龙头识别 (DRGN)
+westock-data lhb <代码>              ← 龙虎榜（机构买入/游资席位）
+westock-data hot                     ← 热搜榜（人气第一龙头判断）
+westock-data sector --rank           ← 板块最强标的排序
+
+# 情绪周期定位 (EMO)
+westock-data kline sh000001 --period day --limit 60   ← 大盘环境
+web_search "今日涨停板统计 连板数 2026"                ← 涨停板情绪
+web_search "A股情绪指数"                               ← 市场情绪量化
+```
+
+**EMO 四阶段情绪判断指标**：
+| 阶段 | 连板数 | 涨停板数 | 操作策略 |
+|------|--------|---------|---------|
+| 启动期 | 1-2 | ≤5 | 🟢开始介入 |
+| 发酵期 | 2-4 | 5-15 | 🟢重仓 |
+| 高潮期 | 5+ | 15+ | 🔴逐步兑现 |
+| 退潮期 | 0-1 | ≤3 | 🔴空仓 |
 
 ---
 

@@ -1,29 +1,24 @@
-# Node.js
-node_modules/
-*.log
-
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.so
 
-# macOS
+# IDE
+.vscode/
+.idea/
+
+# OS
 .DS_Store
-__MACOSX/
+Thumbs.db
 
-# Temp workspace clones
-remote_v25/
-repo_check/
+# Sandbox tmp
+/tmp/
+/sandbox/
 
-# OpenClaw
-.openclaw/workspace-state.json
-.openclaw/sessions/
-
-# Task summaries (local only)
-task-summary_*.md
-agentic-upgrade*.md
-
-# Backtest outputs
-*.html
+# Data outputs that are large
 *.csv
-*.json
-!strategies/**/
+!strategies/*/*.csv
+
+# Local env
+.env
+.env.local
