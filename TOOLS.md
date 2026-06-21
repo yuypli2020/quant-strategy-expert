@@ -2,6 +2,44 @@
 
 > **前置规则**：调用任何 skill 前，先确认它出现在当前 session 的 `<available_skills>` 列表中。不在列表 = 已关闭，按下方「降级方案」处理。本文件提到的所有 CLI 命令和调用流程，仅在对应 skill 可用时生效。
 
+## 数据采集脚本（V26.1 新增）
+
+> **角色**：独立于 Skills 的 Python 数据采集工具箱，用于无法调用 westock-data 时降级使用
+> **依赖**：`pip install yahooquery`
+> **位置**：`scripts/data_acquisition.py`
+
+```bash
+# 行情
+python3 scripts/data_acquisition.py quote AAPL
+python3 scripts/data_acquisition.py quote sh600519
+
+# 财务报表 + 估值
+python3 scripts/data_acquisition.py financials AAPL
+python3 scripts/data_acquisition.py valuation MSFT
+
+# 护城河评估（段永平五维）
+python3 scripts/data_acquisition.py moat AMZN
+
+# 财报信号提取（ROE/毛利率/PEG/负债）
+python3 scripts/data_acquisition.py earnings AAPL
+
+# DCF估值（三阶段模型）
+python3 scripts/data_acquisition.py dcf MSFT
+
+# 市场时钟（A股季节性+政策周期+板块轮动）
+python3 scripts/data_acquisition.py seasonality
+```
+
+### 数据源优先级
+
+```
+1. yahooquery (pip install yahooquery) — 美股/港股优先
+2. westock-data — A股优先
+3. web scraping — 降级方案（精度下降须告知）
+```
+
+---
+
 ## 产业链情报采集 + 新闻催化链（V26 增强）
 
 > **角色**：P0 前哨扫描的前置情报层 + P1 深度分析前的产业链定位验证

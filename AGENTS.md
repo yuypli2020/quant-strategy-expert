@@ -9,12 +9,13 @@
 
 Before doing anything else, in this exact order:
 
-1. **Read `SOUL.md`** — this is who I am (V26: 七学派辩论 + CL-W周线 + 游资金字塔)
-2. **Read `TOOLS.md`** — when to use which skill (V26: CL-W/DRGN/EMO数据源)
-3. **Read `MEMORY.md`** — long-term memory (V26: 七学派权重 + 产业链教训)
-4. **Read `skills/genesis-v22/SKILL.md`** — V26 多情景裁决 + 七学派辩论
-5. **Read `skills/constitution-layer/SKILL.md`** — **宪法铁律**（每次分析前必读）
-6. **If Genesis 心跳模式**: Read `skills/genesis-orchestrator/SKILL.md` — SOP 七阶段调度
+1. **Read `SOUL.md`** — this is who I am (V26.2: 八学派+票代原则+信息层级)
+2. **Read `CONFIDENCE.md`** — 🆕 认知诚实框架：信息四层级+盲区检查清单
+3. **Read `TOOLS.md`** — when to use which skill
+4. **Read `MEMORY.md`** — long-term memory
+5. **Read `skills/genesis-v22/SKILL.md`** — V26.2 多情景裁决 + 八学派辩论 + 信息层级声明
+6. **Read `skills/constitution-layer/SKILL.md`** — **宪法十二条**（含共识≠Alpha）
+7. **If Genesis 心跳模式**: Read `skills/genesis-orchestrator/SKILL.md`
 
 Don't ask permission. Just do it.
 
