@@ -2,6 +2,112 @@
 
 > **前置规则**：调用任何 skill 前，先确认它出现在当前 session 的 `<available_skills>` 列表中。不在列表 = 已关闭，按下方「降级方案」处理。本文件提到的所有 CLI 命令和调用流程，仅在对应 skill 可用时生效。
 
+---
+
+## 🆕 TDX 通达信 MCP 数据源（V26.3 新增）
+
+> **角色**：通达信金融数据 MCP，覆盖 A 股/港股/美股的结构化金融数据，是 **westock-data 的强力补充和部分替代**
+> **优先级**：与 westock-data 互为主备，TDX 在研报/公告/宏观/财务报表方面**优于** westock-data
+> **工具前缀**：`mcp__tdx-finance-ex__001a8c41bb804bc0__`
+
+### 工具清单与适用场景
+
+| 工具 | 用途 | 对标 westock-data | 优势 |
+|------|------|------------------|------|
+| `tdx_lookup_stock` | 股票代码/名称模糊搜索 | `westock-data search` | 同等 |
+| `tdx_quotes` | 实时行情报价 | `westock-data quote` | 同等 |
+| `tdx_kline` | K线数据（日/周/月/分钟） | `westock-data kline` | 同等 |
+| `tdx_indicator_select` | 技术指标计算 | `westock-data technical` | 可选指标更灵活 |
+| `tdx_screener` | 条件选股筛选 | `westock-tool` | 更强：支持多条件组合 |
+| `tdx_api_data` | **统一金融API**（财务报表/股东/机构/行业排名） | `westock-data finance/shareholder` | **远超**：三大报表+机构持仓+行业排名+公司信息全覆盖 |
+| `wenda_report_query` | **券商研报查询** | ❌ 无对标 | **独家**：评级/目标价/观点摘要 |
+| `wenda_notice_query` | **公司公告查询** | ❌ 无对标 | **独家**：临时公告/定期报告/回购增持 |
+| `wenda_news_query` | **新闻资讯查询** | `westock-data news` + `tencent-news` | 自然语言查询更灵活 |
+| `wenda_macro_query` | **宏观数据查询** | `westock-data macro` | 更系统：GDP/CPI/PPI/社融/利率/汇率/进出口 |
+
+### 核心使用场景
+
+#### 1. 财务深度分析（tdx_api_data）
+
+```bash
+# 三大报表
+tdx_api_data entry="TdxShareCW.ph_agf10_cw_lyb" params=["sh600519","00101"]       # 利润表-报告期
+tdx_api_data entry="TdxShareCW.ph_agf10_cw_lyb" params=["sh600519","00102"]       # 利润表-单季度
+tdx_api_data entry="TdxShareCW.ph_agf10_cw_xjllb" params=["sh600519","00101"]     # 现金流量表-报告期
+tdx_api_data entry="TdxShareCW.ph_agf10_cw_zcfzb" params=["sh600519"]             # 资产负债表
+
+# 机构持仓
+tdx_api_data entry="TdxSharePCCW.tdxf10_gg_gdyj" params=["sh600519","jgcg"]        # 机构持股汇总
+tdx_api_data entry="TdxSharePCCW.tdxf10_gg_gdyj" params=["sh600519","ltgd"]        # 十大流通股东
+tdx_api_data entry="TdxSharePCCW.tdxf10_gg_gdyj" params=["sh600519","sdgdbgq"]     # 十大股东
+
+# 公司信息
+tdx_api_data entry="TdxSharePCCW.tdxf10_gg_zxts" params=["sh600519","gsgy",""]     # 公司概要
+tdx_api_data entry="TdxSharePCCW.tdxf10_gg_gsgk" params=["0","sh600519",""]        # 公司基本信息
+tdx_api_data entry="TdxSharePCCW.tdxf10_gg_gsgk" params=["20","sh600519",""]       # 董监高信息
+
+# 行业排名
+tdx_api_data entry="TdxShareCW.ph_agf10_hypm" params=["sh600519","行业排名"]       # 行业财务排名
+
+# 业绩预警
+tdx_api_data entry="TdxSharePCCW.tdxf9_ag_cwsj_yjyj" params=["sh600519",""]        # 业绩预警
+```
+
+#### 2. 研报/公告/新闻（wenda系列）— 🔴 Genesis独家数据源
+
+```bash
+# 券商研报（之前无法获取，现在可直接查询）
+wenda_report_query name="比亚迪" bdate="20260601" edate="20260621" keywords="评级,目标价"
+wenda_report_query query="查一下半导体行业最新深度研报"
+
+# 公司公告
+wenda_notice_query name="宁德时代" bdate="20260601" edate="20260621" keywords="回购,定增"
+wenda_notice_query query="查询江波龙最近一个月的公告"
+
+# 新闻资讯
+wenda_news_query name="中芯国际" bdate="20260601" edate="20260621" keywords="扩产,先进制程"
+wenda_news_query query="查一下机器人板块今天的资讯"
+
+# 宏观数据
+wenda_macro_query query="中国|20210101|20261231||年度GDP总量"
+wenda_macro_query query="美国|20210101|20261231||美国CPI同比"
+```
+
+#### 3. 条件选股（tdx_screener）
+
+```bash
+# 多条件组合选股（替代 westock-tool）
+tdx_screener  # 支持技术+基本面+资金面多维筛选
+```
+
+### 数据源优先级（V26.3 更新）
+
+```
+1. TDX MCP (tdx-*) — A股研报/公告/财务/宏观/选股优先 ✅🆕
+2. westock-data — A股行情/K线/技术指标/资金流向优先
+3. tencent-news — 7×24国内新闻+板块热点
+4. yahooquery (data_acquisition.py) — 美股/港股基本面降级方案
+5. web search — 最终降级方案（精度下降须告知）
+```
+
+### TDX vs westock-data 选择指南
+
+| 需求 | 推荐 | 原因 |
+|------|------|------|
+| 实时行情/K线 | westock-data 或 TDX | 两者均可 |
+| 技术指标 | westock-data | 命令更简洁 |
+| 财务三大报表 | **TDX** | 结构更完整，支持单季度 |
+| 机构持仓/股东 | **TDX** | 数据更全面 |
+| 券商研报 | **TDX（唯一选择）** | westock-data 无此能力 |
+| 公司公告 | **TDX（唯一选择）** | westock-data 无此能力 |
+| 宏观数据 | **TDX** | 更系统化 |
+| 行业排名/对比 | **TDX** | 直接提供行业横向比较 |
+| 资金流向/龙虎榜 | westock-data | TDX 无此功能 |
+| 筹码分析 | westock-data | TDX 无此功能 |
+| 条件选股 | TDX 或 westock-tool | 两者均可 |
+
+---
+
 ## 数据采集脚本（V26.1 新增）
 
 > **角色**：独立于 Skills 的 Python 数据采集工具箱，用于无法调用 westock-data 时降级使用

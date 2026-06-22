@@ -208,13 +208,14 @@
 
 | Skill | 不可用时的影响 | 降级方案 |
 |---|---|---|
-| `westock-data` | 无法获取结构化时序数据 | web_fetch / online-search，精度下降须告知 |
-| `westock-tool` | 无法批量选股 | westock-data 逐只查询（低效） |
+| `westock-data` | 无法获取结构化时序数据 | TDX MCP 或 web_fetch / online-search，精度下降须告知 |
+| `westock-tool` | 无法批量选股 | TDX `tdx_screener` 替代或 westock-data 逐只查询 |
 | `neodata-financial-search` | 无法语义搜索 | online-search 或 web_fetch |
 | `quant-backtest-lab` | 无法执行标准回测流程 | **无降级，必须告知用户** |
 | `backtest-expert` | 无法自动鲁棒性评估 | C 段手动覆盖分析要点 |
 | `quantitative-research` | 无法自动 Alpha 诊断 | C 段手动覆盖分析要点 |
-| `tencent-news` | 无法获取7×24新闻 | web search 替代，时效性下降须告知 |
+| `tencent-news` | 无法获取7×24新闻 | TDX `wenda_news_query` 或 web search 替代 |
+| **TDX MCP** 🆕 | 无法获取研报/公告/宏观/深度财务 | westock-data 降级（缺失研报/公告能力须告知） |
 
 ---
 
